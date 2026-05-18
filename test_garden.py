@@ -1,4 +1,4 @@
-import shutil
+import ast
 from pathlib import Path
 
 from garden import (
@@ -155,23 +155,39 @@ from cli_view import GardenPrinter
 #     assert "  0   1" in output
 
 
-def test_harvesting_tomato_creates_tomato_file(monkeypatch):
-    temp_dir = Path(".test_harvests_temp")
-    if temp_dir.exists():
-        shutil.rmtree(temp_dir)
-    temp_dir.mkdir()
-    monkeypatch.chdir(temp_dir)
-
-    garden = create_garden(1, 1)
-    assert dig(garden, 0, 0) is True
-    assert plant(garden, 0, 0, "tomato") is True
-
-    cell = get_cell(garden, 0, 0)
-    cell["state"] = "ripe"
-
-    assert harvest(garden, 0, 0) == "tomato"
+def test_aufgabe_1_tomato_file_exists():
     assert Path("harvests/tomato.txt").exists()
 
-# def test_tomato_exists():
-#     assert Path("harvests/tomato.txt").exists()
+def test_aufgabe_2_quit_command_exists():
+    source = Path("main.py").read_text(encoding="utf-8")
+    tree = ast.parse(source)
 
+    print_help_table_node = None
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef) and node.name == "print_help_table":
+            print_help_table_node = node
+            break
+
+    assert print_help_table_node is not None
+
+    rows_list = None
+    for node in print_help_table_node.body:
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and node.targets[0].id == "rows"
+            and isinstance(node.value, ast.List)
+        ):
+            rows_list = node.value
+            break
+
+    assert rows_list is not None
+
+    row_values = set()
+    for element in rows_list.elts:
+        if isinstance(element, ast.Tuple) and len(element.elts) == 3:
+            if all(isinstance(item, ast.Constant) and isinstance(item.value, str) for item in element.elts):
+                row_values.add(tuple(item.value for item in element.elts))
+
+    assert ("quit", "Exit the simulator", "quit") in row_values

@@ -5,3 +5,4 @@ __pycache__/
 Agents.md
 harvests
 .test_harvests_temp
+.vscode

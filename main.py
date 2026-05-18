@@ -40,8 +40,11 @@ def split_text_to_lines(text, max_width):
 
 
 def print_help_table():
+
+    ### Aufgabe 2: Füge "quit" als Command Name hinzu, als Beschreibung "Exit the simulator" und als Beispiel "quit".
     rows = [
         ("show", "Display current day and garden grid", "show"),
+        ("quit", "Exit the simulator", "quit"),
         ("dig row col", "Dig a hole on an empty cell", "dig 1 2"),
         (
             "plant row col crop",
@@ -51,8 +54,8 @@ def print_help_table():
         ("water row col", "Water a seed cell", "water 1 2"),
         ("day", "Advance simulation by one day", "day"),
         ("harvest row col", "Harvest a ripe crop", "harvest 1 2"),
-        ("quit", "Exit the simulator", "quit"),
     ]
+    ### Ende Aufgabe 2
 
     print("Available commands:")
     print(
