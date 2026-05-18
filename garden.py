@@ -71,18 +71,12 @@ def water(garden, row, col):
 def advance_day(garden):
     if not garden:
         return True
-    
-    ripe_days = RIPE_DAYS_FROM_SEED
 
     for row in garden:
         for cell in row:
             if cell["state"] == "seed" and cell["water"] >= GROWTH_WATER_NEEDED:
                 cell["days_as_seed"] += 1
-
-                if cell["crop"] == "potatoe":
-                    ripe_days = 2
-                
-                if cell["days_as_seed"] >= ripe_days:
+                if cell["days_as_seed"] >= RIPE_DAYS_FROM_SEED:
                     cell["state"] = "ripe"
             cell["water"] -= 1
 
@@ -107,7 +101,6 @@ def harvest(garden, row, col):
 
     return harvested_crop
 
-
 def create_tomato_harvest_file():
     ### Aufgabe 3: Wenn eine Tomate geerntet wird, soll der User über das Erstellen der tomato.txt Datei informiert werden.
     ### Der Satz "Created file 'tomato.txt' at <current_datetime>" soll in der Konsole ausgegeben werden.
@@ -117,7 +110,6 @@ def create_tomato_harvest_file():
     harvests_dir.mkdir(exist_ok=True)
     target_file = harvests_dir / "tomato.txt"
     current_datetime = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
-    print("Created file 'tomato.txt' at " + current_datetime)
     line = f"harvested 1 tomato {current_datetime}\n"
     with target_file.open("a", encoding="utf-8") as file:
         file.write(line)

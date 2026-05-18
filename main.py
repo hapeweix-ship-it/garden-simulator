@@ -1,7 +1,7 @@
 from cli_view import GardenPrinter
 from garden import advance_day, create_garden, dig, harvest, plant, water
 
-CROPS = ["carrot", "tomato", "bean", "potatoe"]
+CROPS = ["carrot", "tomato", "bean"]
 
 COMMAND_COL_WIDTH = 18
 DESCRIPTION_COL_WIDTH = 52
@@ -44,7 +44,6 @@ def print_help_table():
     ### Aufgabe 2: Füge "quit" als Command Name hinzu, als Beschreibung "Exit the simulator" und als Beispiel "quit".
     rows = [
         ("show", "Display current day and garden grid", "show"),
-        ("quit", "Exit the simulator", "quit"),
         ("dig row col", "Dig a hole on an empty cell", "dig 1 2"),
         (
             "plant row col crop",
