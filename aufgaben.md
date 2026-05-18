@@ -1,0 +1,5 @@
+1. Führe den help command aus und sehe dir die Liste an Commands an. Gehe einen Harvest-Zyklus für das crop "tomato" in der CLI durch. Führe dafür folgende Commands aus: dig, plant, water, day, water, day, water, day, harvest.
+2. Für den Command quit fehlt die Beschreibung im help-Befehl. Füge "quit" als Command
+Name hinzu, "Exit the simulator" als Beschreibung und "quit" als Beispiel. Die Aufgabe ist im Code mittels Kommentarblöcken markiert.
+1. Wenn eine Tomate geerntet wird, soll der User über das Erstellen der tomato.txt Datei informiert werden. Der Satz "Created file tomato.txt at <current_datetime>" soll in der Konsole ausgegeben werden. Beispiel: Created file 'tomato.txt' at 18.05.2026 18:36:22. Die Aufgabe ist im Code mittels Kommentarblöcken markiert.
+2. Füge ein neues Crop "potatoe" hinzu. Man soll es schon nach 2 water + day Zyklen ernten können. Die Aufgabe ist im Code *nicht* mittels Kommentarblöcken markiert.
