@@ -103,7 +103,9 @@ def harvest(garden, row, col):
 
     if harvested_crop == "tomato":
         ### Aufgabe 3: Wenn eine Tomate geerntet wird, soll der User über das Erstellen der tomato.txt Datei informiert werden.
-        ### Der Satz "Created file ’tomato.txt’" soll in der Konsole ausgegeben werden.
+        ### Der Satz "Created file 'tomato.txt'" soll in der Konsole ausgegeben werden.
+
+        print("Created file 'tomato.txt'")
 
         ### Aufgabe 3 Ende
         create_tomato_harvest_file()

@@ -188,6 +188,20 @@ def test_aufgabe_2_quit_command_exists():
     for element in rows_list.elts:
         if isinstance(element, ast.Tuple) and len(element.elts) == 3:
             if all(isinstance(item, ast.Constant) and isinstance(item.value, str) for item in element.elts):
-                row_values.add(tuple(item.value for item in element.elts))
+                row_values.add(tuple(item.value.lower() for item in element.elts))
 
-    assert ("quit", "Exit the simulator", "quit") in row_values
+    assert ("quit", "exit the simulator", "quit") in row_values
+
+
+def test_aufgabe_3_harvest_tomato_prints_message(capsys):
+    garden = create_garden(1, 1)
+    assert dig(garden, 0, 0) is True
+    assert plant(garden, 0, 0, "tomato") is True
+
+    cell = get_cell(garden, 0, 0)
+    cell["state"] = "ripe"
+
+    assert harvest(garden, 0, 0) == "tomato"
+
+    captured = capsys.readouterr()
+    assert "created file 'tomato.txt'" in captured.out.lower()
