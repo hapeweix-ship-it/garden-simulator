@@ -3,6 +3,10 @@
 
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
 
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:latest": {}
+    },
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -11,7 +15,12 @@
       ],
       "settings": {
         "workbench.colorTheme": "Dark Modern",
-        "chat.disableAIFeatures": true
+        "chat.disableAIFeatures": true,
+        "github.copilot.nextEditSuggestions.allowWhitespaceOnlyChanges": false,
+        "github.copilot.nextEditSuggestions.enabled": false,
+        "github.copilot.nextEditSuggestions.fixes": false,
+        "editor.inlineSuggest.enabled": false,
+        "editor.suggest.preview": false
       }
     }
   },
