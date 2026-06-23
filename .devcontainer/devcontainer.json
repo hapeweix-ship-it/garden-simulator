@@ -10,7 +10,7 @@
         "ms-python.vscode-pylance"
       ],
       "settings": {
-        "workbench.colorTheme": "Dark Modern",
+        "workbench.colorTheme": "Default Dark Modern",
         "chat.disableAIFeatures": true,
         "github.copilot.nextEditSuggestions.allowWhitespaceOnlyChanges": false,
         "github.copilot.nextEditSuggestions.enabled": false,

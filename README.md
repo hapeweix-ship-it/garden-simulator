@@ -41,7 +41,6 @@ Open PowerShell in the project folder and run:
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install pytest
 ```
 
 ## Run the Garden-Simulator
@@ -58,7 +57,7 @@ The command-line interface lives in `main.py`. It reads what commands the player
 
 The garden drawing code lives in `cli_view.py`. The `GardenPrinter` class turns the garden data into an ASCII grid that can be printed in the terminal.
 
-The tests live in `test_garden.py`. They show what the garden is supposed to do and help check that the rules still work after changes.
+The assignment test runner lives in `test_runner.py`. It checks each task and clearly shows which tests pass and which still need work.
 
 
 ## Data Model
@@ -109,6 +108,16 @@ python main.py
 
 ## Tutorial 2: Invoke Tests
 
-```powershell
-pytest -q test_garden.py -vv
+In a GitHub Codespace, run:
+
+```bash
+make test
 ```
+
+You can also invoke the test runner directly:
+
+```bash
+python test_runner.py
+```
+
+Each test prints `[PASS]` or `[FAIL]`. All six required tests must pass, including both growth tests for task 5.
