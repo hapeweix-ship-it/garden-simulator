@@ -1,29 +1,33 @@
 # Garden-Simulator
-The Garden-Simulator is a straight forward python program that simulates a garden in a 5x5 grid where you can plant and harvest crops.
 
-The `show` command prints row and column indices.
+Der Garden-Simulator ist ein einfaches Python-Programm, das einen Garten als 5×5-Raster darstellt. Du kannst darin Pflanzen anbauen und ernten.
 
+Der Befehl `show` zeigt die Zeilen- und Spaltennummern des Gartens an.
 
 ```text
-     0   1   2
-  +---+---+---+
- 0| . | o |   |
-  +---+---+---+
- 1|   |   |   |
-  +---+---+---+
- 2|   |   | R |
-  +---+---+---+
+     0   1   2   3   4
+  +---+---+---+---+---+
+ 0| . | o |   |   |   |
+  +---+---+---+---+---+
+ 1|   |   |   |   |   |
+  +---+---+---+---+---+
+ 2|   |   | . |   |   |
+  +---+---+---+---+---+
+ 3|   |   |   | o |   |
+  +---+---+---+---+---+
+ 4|   |   |   |   | R |
+  +---+---+---+---+---+
 ```
 
-The symbols in the grid mean:
+Die Symbole im Raster bedeuten:
 
-- empty space: an empty cell
-- `o`: a dug hole
-- `.`: a planted seed
-- `R`: a ripe crop that can be harvested
+- Leerzeichen: ein leeres Feld
+- `o`: ein umgegrabenes Feld
+- `.`: ein gepflanzter Samen 
+- `R`: eine reife Pflanze, die geerntet werden kann
 
+## Verfügbare Befehle
 
-### Following Commands are at your disposal:
 - `show`
 - `dig row col`
 - `plant row col crop`
@@ -33,91 +37,98 @@ The symbols in the grid mean:
 - `help`
 - `quit`
 
+## Garden-Simulator starten
 
-## Installation
+Führe im Hauptverzeichnis des Projekts folgenden Befehl aus:
 
-Open PowerShell in the project folder and run:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-```
-
-## Run the Garden-Simulator
-In you Terminal in the project root run following command:
-```powershell
+```bash
 python main.py
 ```
 
-## How The Code Is Organized
+Alternativ kannst du `make` verwenden:
 
-The rules of the garden simulator live in `garden.py`. This file uses simple functions and core programming concepts. Most of the edits you have to perform in this file.
+```bash
+make run
+```
 
-The command-line interface lives in `main.py`. It reads what commands the player types, splits them into words, and then uses `if/else` logic to decide what should happen.
+## Aufbau des Codes
 
-The garden drawing code lives in `cli_view.py`. The `GardenPrinter` class turns the garden data into an ASCII grid that can be printed in the terminal.
+Die Regeln des Garden-Simulators befinden sich in `garden.py`. Diese Datei verwendet einfache Funktionen und grundlegende Programmierkonzepte. Die meisten Aufgaben erfordern Änderungen in dieser Datei.
 
-The assignment test runner lives in `test_runner.py`. It checks each task and clearly shows which tests pass and which still need work.
+Die Kommandozeilenoberfläche (CLI) befindet sich in `main.py`. Sie liest die eingegebenen Befehle, zerlegt sie in einzelne Wörter und entscheidet mit `if`/`else`, welche Aktion ausgeführt wird. Die Datei `main.py` muss auch im Zuge der Aufgaben editiert werden.
 
+Die Darstellung des Gartens befindet sich in `cli_view.py`. Die Klasse `GardenPrinter` wandelt die Gartendaten in ein ASCII-Raster um, das im Terminal ausgegeben wird. Diese Daten dürfen nicht verändert werden.
 
-## Data Model
+Der Test-Runner für die Aufgaben befindet sich in `test_runner.py`. Er prüft jede Aufgabe und zeigt deutlich an, welche Tests bestanden wurden und wo noch Änderungen notwendig sind.
 
-Each cell is a dictionary with:
+## Datenmodell
 
-- `state`: `"empty"`, `"hole"`, `"seed"`, `"ripe"`
-- `crop`: `None` or string
-- `water`: integer
-- `days_as_seed`: integer
+Jedes Feld im Garten ist ein Dictionary mit folgenden Einträgen:
 
-## Rules
+- `state`: `"empty"`, `"hole"`, `"seed"` oder `"ripe"`
+- `crop`: `None` oder ein String
+- `water`: eine ganze Zahl (Int)
+- `days_as_seed`: eine ganze Zahl (Int)
 
-- `dig` is only allowed on `empty` and changes state to `hole`
-- `plant` is only allowed on `hole`, changes state to `seed`, sets `crop`, sets `water=0`, and sets `days_as_seed=0`
-- `water` is only allowed on `seed`, and increases water up to `WATER_MAX`
-- `day` affects all cells at once:
-  - water decreases by 1
-  - growth is deterministic:
-    - a `seed` with enough water gains one qualifying day
-    - after `RIPE_DAYS_FROM_SEED` qualifying days, `seed` becomes `ripe`
-- `harvest` is only allowed on `ripe`, returns the crop name, and resets the cell to `empty`
-- harvesting a `tomato` also appends a line to `harvests/tomato.txt`
+## Regeln
 
+- `dig` ist nur auf einem Feld mit dem Zustand `empty` erlaubt und ändert den Zustand zu `hole`.
+- `plant` ist nur auf einem Feld mit dem Zustand `hole` erlaubt. Der Zustand wird zu `seed`, `crop` wird gesetzt und `water` sowie `days_as_seed` werden auf `0` gesetzt.
+- `water` ist nur auf einem Feld mit dem Zustand `seed` erlaubt und erhöht den Wasserstand höchstens bis `WATER_MAX`.
+- `day` wirkt sich gleichzeitig auf alle Felder aus:
+  - Der Wasserstand wird um `1` verringert.
+  - Das Wachstum ist vorhersehbar:
+    - Ein ausreichend bewässerter `seed` erhält einen Wachstumstag.
+    - Nach `RIPE_DAYS_FROM_SEED` Wachstumstagen wird aus `seed` der Zustand `ripe`.
+- `harvest` ist nur bei einer reifen Pflanze erlaubt, gibt den Namen der Pflanze zurück und setzt das Feld auf `empty` zurück.
+- Beim Ernten einer `tomato` wird zusätzlich eine Zeile an `harvests/tomato.txt` angehängt.
 
-## How to work with generative AI
-You should only use a chat based AI product.
+## Arbeiten mit generativer KI
 
-Use it like your personal code buddy that helps you with all sorts of programming related questions regarding syntax, logic or programm flow.
+Verwende ausschließlich ein chatbasiertes KI-Produkt.
 
+Nutze die KI wie einen persönlichen Programmierpartner, der dir bei Fragen zu Syntax, Logik oder Programmabläufen hilft.
 
-## Tutorial 1: How to add new code to the project
-Open `main.py` and go to line 97 where you find following code 
+## Tutorial 1: Neuen Code hinzufügen
+
+Öffne `main.py`. In der Funktion `main()` findest du folgende Zeile:
+
 ```python
 print("Garden Simulator")
 ```
 
-Replace it with:
-```python
-print("Garden Simulator by <Your Name>") #Example: print("Garden Simulator by Tobias")
-```
-Save the file using `CTRL+S`
+Ersetze sie durch:
 
-Start the Garden-Simulator in your terminal and enter:
+```python
+print("Garden Simulator by <Dein Name>")  # Beispiel: print("Garden Simulator by Tobias")
+```
+
+Speichere die Datei mit `CTRL+S`.
+
+Starte anschließend den Garden-Simulator:
+
 ```bash
 python main.py
 ```
 
-## Tutorial 2: Invoke Tests
-
-In a GitHub Codespace, run:
+Alternativ:
 
 ```bash
-make test
+make run
 ```
 
-You can also invoke the test runner directly:
+## Tutorial 2: Tests ausführen
+
+Starte den Test-Runner mit:
 
 ```bash
 python test_runner.py
 ```
 
-Each test prints `[PASS]` or `[FAIL]`. All six required tests must pass, including both growth tests for task 5.
+Alternativ kannst du den Test-Runner mit `make` starten:
+
+```bash
+make test
+```
+
+Jeder Test zeigt `[PASS]` oder `[FAIL]` an. Alle sechs erforderlichen Tests müssen bestanden werden, einschließlich der beiden Wachstumstests für Aufgabe 5.
