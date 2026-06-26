@@ -80,6 +80,15 @@ def advance_day(garden):
                     cell["state"] = "ripe"
             cell["water"] -= 1
 
+            if cell["crop"] == "potato":
+                if cell["days_as_seed"] >= 2:
+                    cell["state"] = "ripe"
+        else:
+                if cell["days_as_seed"] >= RIPE_DAYS_FROM_SEED:
+                    cell["state"] = "ripe"
+
+
+
     return True
 
 
@@ -99,6 +108,9 @@ def harvest(garden, row, col):
     if harvested_crop == "tomato":
         create_tomato_harvest_file()
 
+    else:
+        print(f"[Info] The crop {harvested_crop} has no file entry.")   
+
     return harvested_crop
 
 def create_tomato_harvest_file():
@@ -106,12 +118,21 @@ def create_tomato_harvest_file():
     ### Der Satz "Created file 'tomato.txt' at <current datetime>" soll in der Konsole ausgegeben werden.
     ### Beispiel: Created file 'tomato.txt' at 18.05.2026 18:36:22
 
+    from datetime import datetime
+    from pathlib import Path
+
     harvests_dir = Path("harvests")
     harvests_dir.mkdir(exist_ok=True)
     target_file = harvests_dir / "tomato.txt"
+
+    # Prüfen, ob die Datei neu erstellt wird
+    file_created = not target_file.exists()
+
     current_datetime = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
     line = f"harvested 1 tomato {current_datetime}\n"
     with target_file.open("a", encoding="utf-8") as file:
         file.write(line)
+    if file_created:
+        print(f"Created file 'tomato.txt' at {current_datetime}")
 
     ### Aufgabe 3 Ende
